@@ -44,7 +44,7 @@ function softRemove(schema) {
     opts.softRemove === undefined && (opts.softRemove = true)
 
     if (opts.softRemove === false) {
-      return await originalMethodRemove.call(this)
+      return originalMethodRemove.call(this)
     }
 
     if (this.isRemoved) {
@@ -55,9 +55,9 @@ function softRemove(schema) {
     return this.save()
   })
 
-  schema.method('restore', async function () {
+  schema.method('restore', function () {
     this.isRemoved = false
-    await this.save()
+    return this.save()
   })
 
   var setIsRemoved = function (next) {
