@@ -1,6 +1,6 @@
 var Model = require('mongoose').Model
 
-function softRemove (schema) {
+function softRemove(schema) {
   schema.add({
     removedAt: { type: Date, index: true }
   })
@@ -12,9 +12,9 @@ function softRemove (schema) {
     return this.removedAt !== undefined
   })
 
-  var originalStaticRemove = schema.statics.remove || Model.remove
-  schema.static('remove', function (conditions, cb) {
-    var softRemove = true
+  const originalStaticRemove = schema.statics.remove || Model.remove
+  schema.static('remove', function (conditions) {
+    const softRemove = true
 
     if (conditions.$softRemove !== undefined) {
       softRemove = conditions.$softRemove
@@ -23,46 +23,41 @@ function softRemove (schema) {
     conditions.removedAt = { $exists: false }
 
     if (softRemove === false) {
-      return originalStaticRemove.call(this, conditions, cb)
+      return originalStaticRemove.call(this, conditions)
     }
 
-    this.update(conditions, {
+    return this.update(conditions, {
       $set: { removedAt: new Date() }
-    }, cb)
+    })
   })
 
-  schema.static('restore', function (conditions, cb) {
+  schema.static('restore', function (conditions) {
     conditions.removedAt = { $exists: true }
-    this.update(conditions, {
+
+    return this.update(conditions, {
       $unset: { removedAt: 1 }
-    }, cb)
+    })
   })
 
-  var originalMethodRemove = schema.methods.remove || Model.prototype.remove
-  schema.method('remove', function (opts, cb) {
-    if (typeof opts === 'function') {
-      cb = opts
-      opts = {}
-    }
-
-    opts || (opts = {})
+  const originalMethodRemove = schema.methods.remove || Model.prototype.remove
+  schema.method('remove', function (opts = {}) {
     opts.softRemove === undefined && (opts.softRemove = true)
 
     if (opts.softRemove === false) {
-      return originalMethodRemove.call(this, cb)
+      return await originalMethodRemove.call(this)
     }
 
     if (this.isRemoved) {
-      return cb(null, this, 0)
+      return this
     }
 
     this.isRemoved = true
-    this.save(cb)
+    return this.save()
   })
 
-  schema.method('restore', function (cb) {
+  schema.method('restore', async function () {
     this.isRemoved = false
-    this.save(cb)
+    await this.save()
   })
 
   var setIsRemoved = function (next) {
