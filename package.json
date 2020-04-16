@@ -1,0 +1,26 @@
+{
+  "description": "A mongoose plugin that adds soft removal transparently to mongoose",
+  "devDependencies": {
+    "mocha": "^2.3.4",
+    "mongoose": "^5.9.9",
+    "sinon": "^1.17.2"
+  },
+  "keywords": [
+    "mongoose",
+    "mongoose plugin",
+    "soft delete",
+    "soft deletion",
+    "soft remove",
+    "soft removal"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "mongoose-remove",
+  "peerDependencies": {
+    "mongoose": "^4.0.0"
+  },
+  "scripts": {
+    "test": "mocha test.js"
+  },
+  "version": "1.0.0"
+}
