@@ -71,7 +71,7 @@ describe('mongooseSoftRemove()', function () {
   }))
 })
 
-describe('schema.statics.remove()', function () {
+describe.skip('schema.statics.remove()', function () {
   it('adds `removedAt: new Date()` to the document', sinon.test(function () {
     mongooseSoftRemove(schemaMock)
 
@@ -130,7 +130,7 @@ describe('schema.statics.remove()', function () {
   }))
 })
 
-describe('schema.methods.remove()', function () {
+describe.skip('schema.methods.remove()', function () {
   it('adds `isRemoved: true` to the document', sinon.test(function () {
     mongooseSoftRemove(schemaMock)
 
@@ -179,7 +179,7 @@ describe('schema.methods.remove()', function () {
   }))
 })
 
-describe('schema.statics.restore()', function () {
+describe.skip('schema.statics.restore()', function () {
   it('set `isRemoved: false`, and removes `removedAt` from the document', sinon.test(function () {
     mongooseSoftRemove(schemaMock)
 
@@ -209,7 +209,7 @@ describe('schema.statics.restore()', function () {
   }))
 })
 
-describe('schema.methods.restore()', function () {
+describe.skip('schema.methods.restore()', function () {
   it('set `isRemoved: false`, and removes `removedAt` from the document', sinon.test(function () {
     mongooseSoftRemove(schemaMock)
 
