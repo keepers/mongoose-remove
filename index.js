@@ -53,7 +53,7 @@ function softRemove(schema) {
 
     this.isRemoved = true
     return this.save()
-  })
+  }, { suppressWarning: true })
 
   schema.method('restore', function () {
     this.isRemoved = false
