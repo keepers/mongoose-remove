@@ -1,7 +1,7 @@
 {
   "description": "A mongoose plugin that adds soft removal transparently to mongoose",
   "devDependencies": {
-    "mocha": "^2.3.4",
+    "mocha": "^10.2.0",
     "mongoose": "^5.9.9",
     "sinon": "^1.17.2"
   },
